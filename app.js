@@ -4,34 +4,54 @@ function show(id) {
   document.getElementById(id).classList.add('active');
 }
 
+// Toast вместо alert
+let toastTimer;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
 document.addEventListener('click', e => {
   const nav = e.target.closest('[data-go]');
   if (nav) { show(nav.dataset.go); return; }
 
-  const toast = e.target.closest('[data-toast]');
-  if (toast) { alert(toast.dataset.toast); return; }
+  const t = e.target.closest('[data-toast]');
+  if (t) { toast(t.dataset.toast); return; }
+
+  const opener = e.target.closest('[data-open-create]');
+  if (opener) { document.getElementById('modal-create').classList.add('open'); return; }
+
+  const closer = e.target.closest('[data-close-modal]');
+  if (closer) { closer.closest('.modal-overlay').classList.remove('open'); return; }
 
   const add = e.target.closest('[data-add-block]');
   if (add) { addBlock(); return; }
 
   const kb = e.target.closest('[data-kb]');
   if (kb) { kbPress(kb.dataset.kb); return; }
+
+  if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('open');
 });
 
 // Создание проекта
 document.getElementById('btn-create-project').addEventListener('click', () => {
-  const name = document.getElementById('new-project-name').value.trim() || 'project';
+  const raw = document.getElementById('new-project-name').value.trim() || 'project';
+  const name = raw.charAt(0).toUpperCase() + raw.slice(1);
   const list = document.getElementById('project-list');
   const card = document.createElement('div');
   card.className = 'project-card';
   card.dataset.go = 'project';
   card.innerHTML =
     '<img class="thumb app-icon" src="icon.svg" alt="">' +
-    '<div><div class="name outline-green">' + name.toUpperCase() + '</div>' +
-    '<div class="meta">только что создан · блоков: 0</div></div>';
+    '<div><div class="name">' + name + '</div>' +
+    '<div class="meta">только что создан · 0 блоков</div></div>';
   list.prepend(card);
   document.getElementById('modal-create').classList.remove('open');
   show('projects');
+  toast('Проект «' + name + '» создан');
 });
 
 // Клавиатура
