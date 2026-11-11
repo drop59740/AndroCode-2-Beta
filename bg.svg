@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3DA639"/>
+      <stop offset="1" stop-color="#2E8F2E"/>
+    </linearGradient>
+    <linearGradient id="mtn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B8A1B"/>
+      <stop offset="1" stop-color="#0F7A0F"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#sky)"/>
+
+  <!-- Гора с волнистым краем и срезанным углом -->
+  <path d="M -50 800
+           L -50 300
+           Q 80 260 180 320
+           Q 300 390 420 340
+           Q 560 280 660 360
+           Q 780 450 900 400
+           Q 1030 350 1250 430
+           L 1250 800
+           L 700 800
+           L 640 740 Z"
+        fill="url(#mtn)"/>
+  <!-- Диагональный срез угла горы -->
+  <path d="M 640 740 L 700 800 L 560 800 Z" fill="#0B2B0B" opacity="0.55"/>
+
+  <!-- Горошинки -->
+  <g fill="#8CC63F" opacity="0.9">
+    <circle cx="120" cy="120" r="16"/>
+    <circle cx="300" cy="70" r="9"/>
+    <circle cx="520" cy="150" r="13"/>
+    <circle cx="760" cy="80" r="18"/>
+    <circle cx="980" cy="160" r="10"/>
+    <circle cx="1120" cy="90" r="14"/>
+    <circle cx="200" cy="260" r="8"/>
+    <circle cx="640" cy="230" r="11"/>
+    <circle cx="880" cy="270" r="8"/>
+    <circle cx="1080" cy="300" r="12"/>
+    <circle cx="60" cy="420" r="10"/>
+    <circle cx="420" cy="480" r="8" opacity="0.7"/>
+    <circle cx="1000" cy="520" r="9" opacity="0.7"/>
+    <circle cx="240" cy="620" r="12" opacity="0.6"/>
+    <circle cx="740" cy="660" r="9" opacity="0.6"/>
+    <circle cx="1140" cy="640" r="13" opacity="0.6"/>
+  </g>
+
+  <!-- Звёздочки -->
+  <g fill="#B8F04A">
+    <path d="M 420 100 l 4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4 Z"/>
+    <path d="M 700 190 l 3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 Z"/>
+    <path d="M 940 60 l 4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4 Z"/>
+    <path d="M 160 520 l 3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 Z" opacity="0.8"/>
+    <path d="M 1060 430 l 3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 Z" opacity="0.8"/>
+    <path d="M 560 560 l 3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 Z" opacity="0.6"/>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="ic" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#37C8C8"/>
+      <stop offset="1" stop-color="#9ACD32"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="34" fill="url(#ic)"/>
+  <!-- Робот-андроид, белый контур -->
+  <g stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round">
+    <!-- антенны -->
+    <line x1="72" y1="52" x2="62" y2="36"/>
+    <line x1="128" y1="52" x2="138" y2="36"/>
+    <!-- голова -->
+    <rect x="62" y="52" width="76" height="52" rx="24"/>
+    <!-- глаза -->
+    <circle cx="84" cy="76" r="4" fill="#fff" stroke="none"/>
+    <circle cx="116" cy="76" r="4" fill="#fff" stroke="none"/>
+    <!-- тело -->
+    <rect x="56" y="112" width="88" height="62" rx="14"/>
+    <!-- руки -->
+    <line x1="42" y1="118" x2="42" y2="152"/>
+    <line x1="158" y1="118" x2="158" y2="152"/>
+    <!-- ноги -->
+    <line x1="80" y1="174" x2="80" y2="188"/>
+    <line x1="120" y1="174" x2="120" y2="188"/>
+  </g>
+  <text x="100" y="150" font-family="'Press Start 2P', monospace" font-size="15"
+        fill="#FFFFFF" text-anchor="middle" stroke="#0B2B0B" stroke-width="0.5">AndroCode</text>
+</svg>

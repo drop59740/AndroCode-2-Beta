@@ -1,0 +1,333 @@
+:root {
+  --bg-light: #3DA639;
+  --bg-mid: #2E8F2E;
+  --mountain: #1B8A1B;
+  --mountain-dark: #0F7A0F;
+  --panel: #2E4A2E;
+  --panel-dark: #1E4D1E;
+  --panel-deep: #173B17;
+  --input-dark: #0B2B0B;
+  --btn-text: #B5B35C;
+  --btn-text-light: #C3C36E;
+  --accent: #39E639;
+  --accent-bright: #00FF00;
+  --telegram: #2CA5E0;
+  --olive-btn: #4A5D3A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  font-family: 'Press Start 2P', monospace;
+  background: var(--bg-light);
+  overflow: hidden;
+}
+
+/* ---------- Фон: гора + горошинки + звёзды ---------- */
+.screen-bg {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(160deg, var(--bg-light) 0%, var(--bg-mid) 100%);
+  z-index: 0;
+}
+.screen-bg svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Обводка пиксельного текста ---------- */
+.outline {
+  color: var(--btn-text);
+  text-shadow:
+    -2px -2px 0 #000, 2px -2px 0 #000,
+    -2px  2px 0 #000, 2px  2px 0 #000,
+    -2px 0 0 #000, 2px 0 0 #000,
+    0 -2px 0 #000, 0 2px 0 #000;
+}
+.outline-green {
+  color: var(--accent);
+  text-shadow:
+    -2px -2px 0 #000, 2px -2px 0 #000,
+    -2px  2px 0 #000, 2px  2px 0 #000;
+}
+
+/* ---------- Экраны ---------- */
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.screen.active { display: flex; }
+
+/* ---------- Кнопки ---------- */
+.ac-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  border: 3px solid #143014;
+  border-radius: 12px;
+  color: var(--btn-text);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  padding: 20px 28px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.7;
+  user-select: none;
+  transition: transform 0.06s ease, background 0.06s ease;
+}
+.ac-btn:hover { background: #376037; }
+.ac-btn:active { transform: scale(0.97); background: #244024; }
+
+/* ---------- Главный экран ---------- */
+#screen-menu .app-icon { width: 180px; height: 180px; margin-bottom: 22px; }
+#screen-menu h1 {
+  font-size: 34px;
+  margin-bottom: 48px;
+  letter-spacing: 2px;
+}
+.menu-col { display: flex; flex-direction: column; gap: 22px; }
+.menu-col .ac-btn { width: 260px; padding: 22px 0; }
+
+/* ---------- Шапка служебных экранов ---------- */
+.topbar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 34px;
+}
+.topbar h2 { font-size: 20px; letter-spacing: 4px; }
+.topbar .actions { display: flex; gap: 16px; }
+.topbar .actions .ac-btn { font-size: 12px; padding: 18px 26px; letter-spacing: 3px; }
+.divider {
+  position: absolute;
+  top: 96px; left: 34px; right: 34px;
+  height: 3px;
+  background: var(--mountain-dark);
+  border-radius: 2px;
+}
+
+/* ---------- Проекты ---------- */
+#screen-projects { justify-content: flex-start; padding-top: 130px; }
+.project-list {
+  width: min(860px, 92vw);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.project-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: var(--panel);
+  border: 3px solid #143014;
+  border-radius: 14px;
+  padding: 16px 22px;
+  cursor: pointer;
+}
+.project-card:hover { background: #376037; }
+.project-card .thumb {
+  width: 74px; height: 74px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.project-card .name { font-size: 14px; letter-spacing: 4px; }
+.project-card .meta { font-size: 9px; color: #7CBF2E; margin-top: 10px; letter-spacing: 1px; }
+.empty-note { font-size: 11px; color: #7CBF2E; text-align: center; margin-top: 8px; }
+
+/* ---------- Модальные окна ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: rgba(4, 24, 4, 0.72);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  position: relative;
+  background: var(--panel-deep);
+  border: 4px solid #000;
+  border-radius: 18px;
+  padding: 40px 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+.modal h3 {
+  font-size: 15px;
+  line-height: 2;
+  text-align: center;
+  max-width: 420px;
+}
+.modal input {
+  width: 340px;
+  background: var(--input-dark);
+  border: 3px solid #000;
+  border-radius: 10px;
+  padding: 16px 18px;
+  color: #8CE68C;
+  font-family: monospace;
+  font-size: 18px;
+  caret-color: var(--accent-bright);
+  outline: none;
+}
+.modal .robot { width: 120px; height: 120px; }
+.modal .row { display: flex; gap: 18px; width: 100%; justify-content: flex-end; }
+.modal .row .ac-btn { font-size: 11px; padding: 18px 22px; background: var(--olive-btn); }
+.modal .row .ac-btn:hover { background: #5a7048; }
+
+/* ---------- Выбор типа ресурса ---------- */
+#modal-resource .modal { background: #0E3D0E; }
+#modal-resource h3 { letter-spacing: 3px; color: var(--accent); text-shadow: none; }
+.resource-row { display: flex; gap: 60px; }
+.resource {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 13px;
+  letter-spacing: 3px;
+}
+.resource svg { width: 130px; height: 130px; }
+.resource:hover svg { filter: brightness(1.3); }
+
+/* ---------- Меню проекта 2×3 ---------- */
+#screen-project { justify-content: flex-start; padding-top: 110px; }
+.grid-2x3 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 380px));
+  gap: 26px;
+}
+.grid-2x3 .ac-btn { min-height: 120px; font-size: 15px; }
+.grid-2x3 .ac-btn.small { font-size: 10px; }
+
+/* ---------- Редактор кода ---------- */
+#screen-editor { justify-content: flex-start; padding: 0; }
+.editor-top {
+  width: 100%;
+  padding: 22px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.editor-top .back {
+  font-size: 11px;
+  padding: 14px 18px;
+}
+.code-line {
+  font-family: 'Comic Sans MS', 'Segoe Print', cursive;
+  font-size: 22px;
+  color: #0B2B0B;
+  background: rgba(255,255,255,0.28);
+  border-radius: 8px;
+  padding: 10px 18px;
+}
+.canvas {
+  position: relative;
+  flex: 1;
+  width: 100%;
+}
+.editor-side {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.editor-side .ac-btn { font-size: 11px; padding: 18px 20px; }
+.editor-side .plus { font-size: 30px; padding: 14px 26px; color: var(--btn-text-light); }
+
+/* Блоки */
+.block {
+  position: absolute;
+  min-width: 190px;
+  background: var(--panel);
+  border: 3px solid #143014;
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: var(--btn-text);
+  font-size: 11px;
+  cursor: grab;
+  user-select: none;
+}
+.block .ports { display: flex; justify-content: space-between; margin-top: 12px; gap: 40px; }
+.block .port {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid #0B2B0B;
+}
+.block .port.out { background: #7CBF2E; }
+.block .port-label { font-size: 8px; color: #7CBF2E; margin-top: 6px; }
+
+/* ---------- Клавиатура ---------- */
+#screen-keyboard { justify-content: flex-start; padding-top: 40px; gap: 26px; }
+.kb-input {
+  width: min(640px, 92vw);
+  height: 110px;
+  background: var(--input-dark);
+  border: 3px solid #000;
+  border-radius: 14px;
+  color: #fff;
+  font-family: monospace;
+  font-size: 26px;
+  padding: 16px 20px;
+  outline: none;
+  caret-color: #fff;
+}
+.kb-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 92px) 92px;
+  gap: 12px;
+}
+.kb-grid .ac-btn {
+  width: 92px; height: 78px;
+  font-size: 13px;
+  padding: 0;
+  background: rgba(30, 77, 30, 0.85);
+  color: var(--accent);
+  text-shadow: none;
+}
+.kb-grid .ac-btn.wide { width: auto; grid-column: span 2; }
+.kb-grid .ac-btn.op { color: var(--btn-text-light); }
+.kb-bottom { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.kb-bottom .ac-btn { height: 70px; font-size: 11px; padding: 0 22px; color: var(--accent); text-shadow: none; }
+.kb-bottom .ac-btn.wide2 { min-width: 200px; }
+
+/* ---------- Иконка приложения ---------- */
+.app-icon { display: block; border-radius: 18%; }
+
+/* ---------- Telegram-плашка (промо) ---------- */
+.tg-chip {
+  position: absolute;
+  top: 26px; right: 34px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--panel);
+  border: 3px solid #143014;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 10px;
+  color: var(--telegram);
+  text-decoration: none;
+}
+.tg-chip svg { width: 28px; height: 28px; }

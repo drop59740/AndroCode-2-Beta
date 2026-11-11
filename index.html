@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AndroCode — веб-прототип</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen-bg">
+  <img src="bg.svg" alt="">
+</div>
+
+<!-- ===== Главный экран ===== -->
+<section class="screen active" id="screen-menu">
+  <img class="app-icon" src="icon.svg" alt="AndroCode">
+  <h1 class="outline">AndroCode</h1>
+  <div class="menu-col">
+    <div class="ac-btn" data-go="projects">Create</div>
+    <div class="ac-btn" data-toast="Настройки — заглушка прототипа">Settings</div>
+    <div class="ac-btn" data-toast="Info — заглушка прототипа">info</div>
+  </div>
+  <a class="tg-chip" href="https://t.me/androcode_official" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="#2CA5E0"><path d="M21.9 4.6 19 19.3c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.9.4l.3-4.6L18.6 7c.4-.3-.1-.5-.6-.2L7.7 13.3 3.3 12c-1-.3-1-1 .2-1.4l17-6.6c.8-.3 1.5.2 1.4.6z"/></svg>
+    t.me/androcode_official
+  </a>
+</section>
+
+<!-- ===== Проекты ===== -->
+<section class="screen" id="screen-projects">
+  <div class="topbar">
+    <h2 class="outline-green">ПРОЕКТЫ</h2>
+    <div class="actions">
+      <div class="ac-btn" data-toast="Сохранение — заглушка">СОХРАНИТЬ</div>
+      <div class="ac-btn" data-toast="Удаление — заглушка">УДАЛИТЬ</div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="project-list" id="project-list">
+    <div class="project-card" data-go="project">
+      <img class="thumb app-icon" src="icon.svg" alt="">
+      <div>
+        <div class="name outline-green">МОЙ ПРОЕКТ</div>
+        <div class="meta">изменён: сегодня · блоков: 12</div>
+      </div>
+    </div>
+    <div class="empty-note">нажми на проект, чтобы открыть</div>
+  </div>
+</section>
+
+<!-- ===== Меню проекта ===== -->
+<section class="screen" id="screen-project">
+  <div class="topbar">
+    <h2 class="outline" style="font-size:16px">AndroCode</h2>
+    <div class="actions"><div class="ac-btn" data-go="projects" style="font-size:11px">&lt; НАЗАД</div></div>
+  </div>
+  <div class="grid-2x3">
+    <div class="ac-btn" data-go="editor">Scripts</div>
+    <div class="ac-btn small" data-toast="Sprites — заглушка">Sprites</div>
+    <div class="ac-btn" data-toast="Links — заглушка" style="font-size:18px">Links</div>
+    <div class="ac-btn small" data-toast="Sounds — заглушка">Sounds</div>
+    <div class="ac-btn small" data-toast="Monetization — заглушка">Monetization<br>request</div>
+    <div class="ac-btn small" data-toast="Optimization — заглушка">Project<br>optimization</div>
+  </div>
+</section>
+
+<!-- ===== Редактор кода ===== -->
+<section class="screen" id="screen-editor">
+  <div class="editor-top">
+    <div class="ac-btn back" data-go="project">&lt; НАЗАД</div>
+    <div class="code-line">print to app:Hello World</div>
+  </div>
+  <div class="canvas" id="canvas">
+    <div class="block" style="left:8%; top:14%">
+      print to app
+      <div class="ports">
+        <div><div class="port"></div><div class="port-label">in</div></div>
+        <div><div class="port out"></div><div class="port-label">out</div></div>
+      </div>
+    </div>
+    <div class="block" style="left:34%; top:44%">
+      text: "Hello World"
+      <div class="ports">
+        <div><div class="port out"></div><div class="port-label">out</div></div>
+      </div>
+    </div>
+    <div class="editor-side">
+      <div class="ac-btn" data-toast="Saving code — заглушка">Saving code</div>
+      <div class="ac-btn plus" data-add-block>+</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Клавиатура ===== -->
+<section class="screen" id="screen-keyboard">
+  <input class="kb-input" id="kb-input" value="Hello World" readonly>
+  <div class="kb-grid">
+    <div class="ac-btn wide" data-kb="ТЕКСТ">ТЕКСТ</div>
+    <div class="ac-btn op" data-kb="+">+</div>
+    <div class="ac-btn op" data-kb="==">==</div>
+    <div class="ac-btn op" data-kb="(">(</div>
+    <div class="ac-btn op" data-kb=")">)</div>
+    <div class="ac-btn op" data-kb="-">−</div>
+    <div class="ac-btn" data-kb="1">1</div>
+    <div class="ac-btn" data-kb="2">2</div>
+    <div class="ac-btn" data-kb="3">3</div>
+    <div class="ac-btn" data-kb="4">4</div>
+    <div class="ac-btn" data-kb="5">5</div>
+    <div class="ac-btn" data-kb="6">6</div>
+    <div class="ac-btn" data-kb="7">7</div>
+    <div class="ac-btn" data-kb="8">8</div>
+    <div class="ac-btn" data-kb="9">9</div>
+    <div class="ac-btn op" data-kb="*">*</div>
+    <div class="ac-btn" data-kb="0">0</div>
+    <div class="ac-btn" data-kb=".">.</div>
+    <div class="ac-btn op" data-kb="/">/</div>
+    <div class="ac-btn op" data-kb="^">^</div>
+    <div class="ac-btn op" data-kb="..">..</div>
+  </div>
+  <div class="kb-bottom">
+    <div class="ac-btn" data-kb="back">&lt;—</div>
+    <div class="ac-btn" data-kb="ДА">ДА</div>
+    <div class="ac-btn" data-kb="ОК">ОК</div>
+    <div class="ac-btn wide2" data-go="editor">ДРУГОЕ</div>
+  </div>
+</section>
+
+<!-- ===== Модалка: создание проекта ===== -->
+<div class="modal-overlay" id="modal-create">
+  <div class="modal">
+    <h3 class="outline">Write down the<br>name project</h3>
+    <input id="new-project-name" value="project" spellcheck="false">
+    <img class="robot" src="icon.svg" alt="">
+    <div class="row">
+      <div class="ac-btn" id="btn-create-project">Create<br>project</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Модалка: выбор типа ресурса ===== -->
+<div class="modal-overlay" id="modal-resource">
+  <div class="modal">
+    <h3>ВЫБЕРИТЕ ТИП РЕСУРСА</h3>
+    <div class="resource-row">
+      <div class="resource" data-toast="Спрайты — заглушка">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#1FA51F" stroke-width="6" stroke-linejoin="round">
+          <rect x="10" y="18" width="80" height="64" rx="8"/>
+          <path d="M20 70 L42 44 L56 60 L66 50 L82 70"/>
+          <circle cx="68" cy="34" r="8"/>
+        </svg>
+        <span>СПРАЙТЫ</span>
+      </div>
+      <div class="resource" data-toast="Звук — заглушка">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#1FA51F" stroke-width="6" stroke-linecap="round">
+          <path d="M40 72 V22 L74 14 V64"/>
+          <circle cx="30" cy="72" r="10"/>
+          <circle cx="64" cy="64" r="10"/>
+        </svg>
+        <span>ЗВУК</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
