@@ -9,19 +9,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-theme="dark">
 
 <div class="screen-bg"></div>
 
-<!-- ===== Главный экран ===== -->
+<!-- ============ ГЛАВНОЕ МЕНЮ ============ -->
 <section class="screen active" id="screen-menu">
   <img class="app-icon" src="icon.svg" alt="AndroCode">
   <h1 class="logo-font">AndroCode</h1>
-  <p class="tagline">Создавай 2D-игры и приложения прямо на телефоне</p>
+  <p class="tagline" data-i18n="tagline">Создавай 2D-игры и приложения прямо на телефоне</p>
   <div class="menu-col">
-    <div class="btn btn-primary" data-go="projects">Create project</div>
-    <div class="btn" data-toast="Настройки — скоро">Settings</div>
-    <div class="btn btn-ghost" data-toast="Info — скоро">Info</div>
+    <div class="btn btn-primary" data-go="projects" data-i18n="m_projects">Проекты</div>
+    <div class="btn" data-go="settings" data-i18n="m_settings">Настройки</div>
+    <div class="btn btn-ghost" data-go="info" data-i18n="m_info">Информация</div>
   </div>
   <a class="tg-chip" href="https://t.me/androcode_official" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="#2CA5E0"><path d="M21.9 4.6 19 19.3c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.9.4l.3-4.6L18.6 7c.4-.3-.1-.5-.6-.2L7.7 13.3 3.3 12c-1-.3-1-1 .2-1.4l17-6.6c.8-.3 1.5.2 1.4.6z"/></svg>
@@ -29,144 +29,222 @@
   </a>
 </section>
 
-<!-- ===== Проекты ===== -->
+<!-- ============ ЭКРАН ПРОЕКТОВ ============ -->
 <section class="screen" id="screen-projects">
   <div class="topbar">
-    <h2>Проекты</h2>
+    <h2 data-i18n="projects">Проекты</h2>
     <div class="actions">
-      <div class="btn btn-primary" data-open-create>+ Новый проект</div>
-      <div class="btn" data-toast="Сохранение — скоро">Сохранить</div>
-      <div class="btn btn-danger" data-toast="Удаление — скоро">Удалить</div>
+      <div class="btn" data-import>+ <span data-i18n="import">Импорт</span></div>
+      <div class="btn btn-primary" data-open-create>+ <span data-i18n="create">Создать проект</span></div>
     </div>
   </div>
-  <div class="project-list" id="project-list">
-    <div class="project-card" data-go="project">
-      <img class="thumb app-icon" src="icon.svg" alt="">
-      <div>
-        <div class="name">Мой проект</div>
-        <div class="meta">изменён сегодня · 12 блоков</div>
-      </div>
-    </div>
-    <div class="empty-note">нажми на проект, чтобы открыть</div>
+  <div class="search-row">
+    <input type="text" id="search" data-i18n-ph="search_ph" placeholder="Поиск по названию...">
   </div>
+  <div class="project-list" id="project-list"></div>
+  <input type="file" id="import-file" accept=".json" style="display:none">
 </section>
 
-<!-- ===== Меню проекта ===== -->
-<section class="screen" id="screen-project">
-  <div class="topbar">
-    <h2 class="logo-font" style="font-size:20px">AndroCode</h2>
-    <div class="actions"><div class="btn btn-ghost" data-go="projects">&larr; Назад</div></div>
-  </div>
-  <div class="grid-2x3">
-    <div class="btn btn-primary" data-go="editor">Scripts<small>редактор блоков</small></div>
-    <div class="btn" data-toast="Sprites — скоро">Sprites<small>спрайты и графика</small></div>
-    <div class="btn" data-toast="Links — скоро">Links<small>связи и события</small></div>
-    <div class="btn" data-toast="Sounds — скоро">Sounds<small>звуки</small></div>
-    <div class="btn" data-toast="Monetization — скоро">Monetization<small>запрос монетизации</small></div>
-    <div class="btn" data-toast="Optimization — скоро">Optimization<small>оптимизация проекта</small></div>
-  </div>
-</section>
-
-<!-- ===== Редактор кода ===== -->
+<!-- ============ ЭКРАН РЕДАКТОРА ============ -->
 <section class="screen" id="screen-editor">
   <div class="editor-top">
-    <div class="btn btn-ghost" data-go="project">&larr; Назад</div>
-    <div class="code-line">print to app:"Hello World"</div>
+    <div class="btn btn-ghost btn-icon" data-go="projects" title="К проектам">&larr;</div>
+    <input class="pname" id="editor-pname" spellcheck="false">
+    <div class="spacer"></div>
+    <div class="btn" data-save title="Сохранить">&#128190; <span data-i18n="save">Сохранить</span></div>
+    <div class="btn btn-icon" data-undo title="Отменить">&#8630;</div>
+    <div class="btn btn-icon" data-redo title="Вернуть">&#8631;</div>
+    <div class="btn btn-primary" data-run>&#9654; <span data-i18n="run">Запустить</span></div>
+    <div class="btn" data-go="build">&#128738; <span data-i18n="build">Собрать APK</span></div>
   </div>
-  <div class="canvas" id="canvas">
-    <div class="block" style="left:8%; top:16%">
-      print to app
-      <div class="ports">
-        <div><div class="port"></div><div class="port-label">in</div></div>
-        <div><div class="port out"></div><div class="port-label">out</div></div>
+  <div class="editor-body">
+    <div class="palette" id="palette">
+      <h4 data-i18n="palette">Палитра блоков</h4>
+    </div>
+    <div class="canvas-wrap grid-on" id="canvas-wrap">
+      <div class="canvas-inner" id="canvas-inner">
+        <svg id="links"></svg>
+      </div>
+      <div class="canvas-hint">колесо — зум · перетаскивание фона — панорама · долгое нажатие на блок — меню</div>
+      <div class="editor-side">
+        <div class="btn" data-toast="Сохранено (прототип)"><span data-i18n="save">Сохранить</span></div>
+        <div class="btn btn-primary plus" data-add-block>+</div>
       </div>
     </div>
-    <div class="block" style="left:36%; top:48%">
-      text: "Hello World"
-      <div class="ports">
-        <div><div class="port out"></div><div class="port-label">out</div></div>
+    <div class="inspector" id="inspector">
+      <div>
+        <h4 data-i18n="screens">Экраны</h4>
+        <div id="screens-list" style="display:flex;flex-direction:column;gap:8px;margin-top:10px"></div>
+        <div class="add-row" style="margin-top:8px">
+          <div class="btn" data-add-screen>+ <span data-i18n="add_screen">Экран</span></div>
+        </div>
       </div>
-    </div>
-    <div class="editor-side">
-      <div class="btn" data-toast="Сохранение кода — скоро">Save code</div>
-      <div class="btn btn-primary plus" data-add-block>+</div>
+      <div>
+        <h4 data-i18n="components">Компоненты экрана</h4>
+        <div id="components-list" style="display:flex;flex-direction:column;gap:8px;margin-top:10px"></div>
+        <div class="add-row" style="margin-top:8px">
+          <div class="btn" data-add-comp="Кнопка">+ Кнопка</div>
+          <div class="btn" data-add-comp="Текст">+ Текст</div>
+          <div class="btn" data-add-comp="Картинка">+ Картинка</div>
+        </div>
+      </div>
+      <div>
+        <h4 data-i18n="props">Свойства</h4>
+        <div class="prop-form" id="prop-form" style="margin-top:10px"></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Клавиатура ===== -->
-<section class="screen" id="screen-keyboard">
-  <input class="kb-input" id="kb-input" value="Hello World" readonly>
-  <div class="kb-grid">
-    <div class="btn wide" data-kb="ТЕКСТ">ТЕКСТ</div>
-    <div class="btn op" data-kb="+">+</div>
-    <div class="btn op" data-kb="==">==</div>
-    <div class="btn op" data-kb="(">(</div>
-    <div class="btn op" data-kb=")">)</div>
-    <div class="btn op" data-kb="-">&minus;</div>
-    <div class="btn" data-kb="1">1</div>
-    <div class="btn" data-kb="2">2</div>
-    <div class="btn" data-kb="3">3</div>
-    <div class="btn" data-kb="4">4</div>
-    <div class="btn" data-kb="5">5</div>
-    <div class="btn" data-kb="6">6</div>
-    <div class="btn" data-kb="7">7</div>
-    <div class="btn" data-kb="8">8</div>
-    <div class="btn" data-kb="9">9</div>
-    <div class="btn op" data-kb="*">*</div>
-    <div class="btn" data-kb="0">0</div>
-    <div class="btn" data-kb=".">.</div>
-    <div class="btn op" data-kb="/">/</div>
-    <div class="btn op" data-kb="^">^</div>
-    <div class="btn op" data-kb="..">..</div>
+<!-- ============ ЭКРАН СБОРКИ ============ -->
+<section class="screen" id="screen-build">
+  <div class="topbar">
+    <h2 data-i18n="build_title">Сборка APK</h2>
+    <div class="actions"><div class="btn btn-ghost" data-go="editor">&larr; <span data-i18n="back_editor">К редактору</span></div></div>
   </div>
-  <div class="kb-bottom">
-    <div class="btn" data-kb="back">&larr;</div>
-    <div class="btn" data-kb="ДА">ДА</div>
-    <div class="btn" data-kb="ОК">ОК</div>
-    <div class="btn wide2" data-go="editor">Другое</div>
+  <div class="build-card">
+    <h3 data-i18n="build_settings">Параметры сборки</h3>
+    <div class="field">
+      <label data-i18n="apk_name">Название APK</label>
+      <input type="text" id="apk-name" value="AndroCode App">
+    </div>
+    <div class="field">
+      <label data-i18n="apk_ver">Версия</label>
+      <select id="apk-version">
+        <option>1.0.0</option><option>1.1.0</option><option>2.0.0</option>
+      </select>
+    </div>
+    <div class="field">
+      <label data-i18n="apk_icon">Иконка</label>
+      <div class="icon-pick" id="apk-icons">
+        <img src="icon.svg" class="sel" data-icon="icon.svg">
+        <img src="icon.svg" data-icon="icon.svg" style="filter:hue-rotate(120deg)">
+        <img src="icon.svg" data-icon="icon.svg" style="filter:hue-rotate(-60deg)">
+        <img src="icon.svg" data-icon="icon.svg" style="filter:grayscale(1)">
+      </div>
+    </div>
+    <div class="btn btn-primary" id="btn-build" data-i18n="do_build">Собрать</div>
+    <div class="progress" id="build-progress"><div class="bar" id="build-bar"></div></div>
+    <div class="build-status" id="build-status"></div>
+    <div class="row" style="gap:12px">
+      <div class="btn" id="btn-install" style="opacity:0.4;pointer-events:none" data-i18n="install">Установить</div>
+      <div class="btn" id="btn-share" style="opacity:0.4;pointer-events:none" data-i18n="share">Поделиться</div>
+    </div>
+    <div class="errors" id="build-errors"></div>
   </div>
 </section>
 
-<!-- ===== Модалка: создание проекта ===== -->
+<!-- ============ ЭКРАН НАСТРОЕК ============ -->
+<section class="screen" id="screen-settings">
+  <div class="topbar">
+    <h2 data-i18n="m_settings">Настройки</h2>
+    <div class="actions"><div class="btn btn-ghost" data-go="menu">&larr; <span data-i18n="back">Назад</span></div></div>
+  </div>
+  <div class="settings-card">
+    <div class="set-row">
+      <div><div class="lbl" data-i18n="theme">Тёмная тема</div><div class="sub" data-i18n="theme_sub">Светлая / тёмная палитра</div></div>
+      <label class="switch"><input type="checkbox" id="set-theme" checked><span class="track"></span><span class="knob"></span></label>
+    </div>
+    <div class="set-row">
+      <div><div class="lbl" data-i18n="lang">Язык</div></div>
+      <select id="set-lang"><option value="ru">Русский</option><option value="en">English</option></select>
+    </div>
+    <div class="set-row">
+      <div><div class="lbl" data-i18n="grid">Размер сетки</div><div class="sub" data-i18n="grid_sub">Шаг сетки редактора</div></div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <input type="range" id="set-grid" min="16" max="64" step="8" value="32">
+        <span class="range-val" id="set-grid-val">32</span>
+      </div>
+    </div>
+    <div class="set-row">
+      <div><div class="lbl" data-i18n="vibro">Вибрация</div><div class="sub" data-i18n="vibro_sub">Отклик на действия</div></div>
+      <label class="switch"><input type="checkbox" id="set-vibro" checked><span class="track"></span><span class="knob"></span></label>
+    </div>
+    <div class="set-row">
+      <div><div class="lbl" data-i18n="autosave">Автосохранение</div><div class="sub" data-i18n="autosave_sub">Сохранять при каждом изменении</div></div>
+      <label class="switch"><input type="checkbox" id="set-autosave" checked><span class="track"></span><span class="knob"></span></label>
+    </div>
+    <div class="set-row">
+      <div><div class="lbl" data-i18n="cache">Очистить кэш</div><div class="sub" data-i18n="cache_sub">Удалит локальные данные прототипа</div></div>
+      <div class="btn btn-danger" id="btn-clear-cache" data-i18n="clear">Очистить</div>
+    </div>
+    <div class="set-row">
+      <div><div class="lbl" data-i18n="about">О приложении</div></div>
+      <div class="btn" data-go="info" data-i18n="open">Открыть</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ЭКРАН ИНФОРМАЦИИ ============ -->
+<section class="screen" id="screen-info">
+  <div class="topbar">
+    <h2 data-i18n="m_info">Информация</h2>
+    <div class="actions"><div class="btn btn-ghost" data-go="menu">&larr; <span data-i18n="back">Назад</span></div></div>
+  </div>
+  <div class="info-card">
+    <img class="app-icon" src="icon.svg">
+    <h3 class="logo-font" style="font-size:18px">AndroCode 2 Beta</h3>
+    <p data-i18n="info_desc">Конструктор, в котором ты можешь создать 2D-игру или приложение прямо на своём телефоне. Просто соединяй входы и выходы блоков!</p>
+    <div class="info-links">
+      <a class="tg-chip" href="https://t.me/androcode_official" target="_blank" rel="noopener" style="position:static">Telegram</a>
+      <div class="tg-chip" data-toast="Сайт — скоро" style="position:static;cursor:pointer;color:var(--accent);border-color:var(--stroke-strong);background:var(--accent-soft)" data-i18n="site">Сайт</div>
+    </div>
+    <div class="licenses">
+      AndroCode © 2025 · версия 2.0.0-beta<br>
+      Шрифты: Inter (OFL), Press Start 2P (OFL), JetBrains Mono (OFL)<br>
+      Иконки и графика — собственные (SVG)
+    </div>
+  </div>
+</section>
+
+<!-- ============ ОКНО СОЗДАНИЯ ПРОЕКТА ============ -->
 <div class="modal-overlay" id="modal-create">
   <div class="modal">
-    <h3>Название проекта</h3>
-    <input id="new-project-name" value="project" spellcheck="false">
+    <h3 data-i18n="new_project">Новый проект</h3>
+    <input type="text" id="new-project-name" value="Мой проект" spellcheck="false">
+    <div class="icon-pick" id="create-icons">
+      <img src="icon.svg" class="sel" data-icon="icon.svg">
+      <img src="icon.svg" data-icon="icon.svg" style="filter:hue-rotate(120deg)">
+      <img src="icon.svg" data-icon="icon.svg" style="filter:hue-rotate(-60deg)">
+      <img src="icon.svg" data-icon="icon.svg" style="filter:grayscale(1)">
+    </div>
+    <div class="seg" id="create-type">
+      <div class="btn on" data-tpl="empty" data-i18n="empty">Пустой проект</div>
+      <div class="btn" data-tpl="clicker" data-i18n="tpl_clicker">Шаблон: кликер</div>
+      <div class="btn" data-tpl="demo" data-i18n="tpl_demo">Шаблон: демо</div>
+    </div>
     <div class="row">
-      <div class="btn btn-ghost" data-close-modal>Отмена</div>
-      <div class="btn btn-primary" id="btn-create-project">Создать</div>
+      <div class="btn btn-ghost" data-close-modal data-i18n="cancel">Отмена</div>
+      <div class="btn btn-primary" id="btn-create-project" data-i18n="create">Создать</div>
     </div>
   </div>
 </div>
 
-<!-- ===== Модалка: выбор типа ресурса ===== -->
-<div class="modal-overlay" id="modal-resource">
+<!-- ============ УНИВЕРСАЛЬНЫЙ ВВОД ============ -->
+<div class="modal-overlay" id="modal-prompt">
   <div class="modal">
-    <h3>Выберите тип ресурса</h3>
-    <div class="resource-row">
-      <div class="resource" data-toast="Спрайты — скоро">
-        <svg viewBox="0 0 100 100" fill="none" stroke="#3DA639" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-          <rect x="10" y="18" width="80" height="64" rx="10"/>
-          <path d="M20 70 L42 44 L56 60 L66 50 L82 70"/>
-          <circle cx="68" cy="34" r="8"/>
-        </svg>
-        <span>Спрайты</span>
-      </div>
-      <div class="resource" data-toast="Звук — скоро">
-        <svg viewBox="0 0 100 100" fill="none" stroke="#3DA639" stroke-width="5" stroke-linecap="round">
-          <path d="M40 72 V22 L74 14 V64"/>
-          <circle cx="30" cy="72" r="10"/>
-          <circle cx="64" cy="64" r="10"/>
-        </svg>
-        <span>Звук</span>
-      </div>
+    <h3 id="prompt-title"></h3>
+    <input type="text" id="prompt-input" spellcheck="false">
+    <div class="row">
+      <div class="btn btn-ghost" data-close-modal data-i18n="cancel">Отмена</div>
+      <div class="btn btn-primary" id="prompt-ok" data-i18n="ok">ОК</div>
     </div>
   </div>
 </div>
+
+<!-- ============ ПРЕВЬЮ ЗАПУСКА ============ -->
+<div class="modal-overlay" id="modal-run">
+  <div class="modal">
+    <h3 data-i18n="preview">Тестовый запуск</h3>
+    <div class="preview" id="run-preview"></div>
+    <div class="btn btn-ghost" data-close-modal data-i18n="close">Закрыть</div>
+  </div>
+</div>
+
+<!-- ============ КОНТЕКСТНОЕ МЕНЮ ============ -->
+<div class="ctx" id="ctx"></div>
 
 <div id="toast"></div>
-
 <script src="app.js"></script>
 </body>
 </html>
